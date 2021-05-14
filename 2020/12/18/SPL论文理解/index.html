@@ -1,0 +1,276 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SPL论文理解 | 雨竹のspace</title><meta name="keywords" content="信安论文理解"><meta name="author" content="雨竹"><meta name="copyright" content="雨竹"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="他们为什么做这项⼯作？(背景和目的）背景： 无线定位系统中锚的位置→位置隐私泄露。攻击者可能根据显示的位置攻击锚点，甚至破坏定位基础结构。 基于差异隐私的技术可以为隐私保护提供理论上的保证，而这种隐私保护则会降低定位精度。但是，定位精度和隐私级别之间的定量关系仍然不清楚。   目的 研究在单个目标定位系统中定位精度与位置隐私级别之间的定量关系，其中以地理不可区分性为隐私概念。  针对这项工作，别人">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SPL论文理解">
+<meta property="og:url" content="http://example.com/2020/12/18/SPL%E8%AE%BA%E6%96%87%E7%90%86%E8%A7%A3/index.html">
+<meta property="og:site_name" content="雨竹のspace">
+<meta property="og:description" content="他们为什么做这项⼯作？(背景和目的）背景： 无线定位系统中锚的位置→位置隐私泄露。攻击者可能根据显示的位置攻击锚点，甚至破坏定位基础结构。 基于差异隐私的技术可以为隐私保护提供理论上的保证，而这种隐私保护则会降低定位精度。但是，定位精度和隐私级别之间的定量关系仍然不清楚。   目的 研究在单个目标定位系统中定位精度与位置隐私级别之间的定量关系，其中以地理不可区分性为隐私概念。  针对这项工作，别人">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/site/%E7%9B%B8%E6%8B%A51.jpg">
+<meta property="article:published_time" content="2020-12-18T02:52:31.000Z">
+<meta property="article:modified_time" content="2021-01-02T03:29:17.564Z">
+<meta property="article:author" content="雨竹">
+<meta property="article:tag" content="信安论文理解">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/site/%E7%9B%B8%E6%8B%A51.jpg"><link rel="shortcut icon" href="/img/site/icon.png"><link rel="canonical" href="http://example.com/2020/12/18/SPL%E8%AE%BA%E6%96%87%E7%90%86%E8%A7%A3/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="yandex-verification" content="{&quot;theme_color&quot;:{&quot;enable&quot;:true,&quot;main&quot;:&quot;#49B1F5&quot;,&quot;paginator&quot;:&quot;#00c4b6&quot;,&quot;button_hover&quot;:&quot;#FF7242&quot;,&quot;text_selection&quot;:&quot;#00c4b6&quot;,&quot;link_color&quot;:&quot;#99a9bf&quot;,&quot;meta_color&quot;:&quot;#858585&quot;,&quot;hr_color&quot;:&quot;#A4D8FA&quot;,&quot;code_foreground&quot;:&quot;#F47466&quot;,&quot;code_background&quot;:&quot;rgba(27, 31, 35, .05)&quot;,&quot;toc_color&quot;:&quot;#00c4b6&quot;,&quot;blockquote_padding_color&quot;:&quot;#49b1f5&quot;,&quot;blockquote_background_color&quot;:&quot;#49b1f5&quot;}}"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: true
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-01-02 11:29:17'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/site/%E4%B8%8B%E8%BD%BD.jpg" onerror="onerror=null;src='null'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/site/%E7%9B%B8%E6%8B%A51.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">雨竹のspace</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><h1 class="post-title">SPL论文理解</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-12-18T02:52:31.000Z" title="发表于 2020-12-18 10:52:31">2020-12-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-01-02T03:29:17.564Z" title="更新于 2021-01-02 11:29:17">2021-01-02</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%BF%A1%E5%AE%89%E5%A4%A7%E8%B5%9B/">信安大赛</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="他们为什么做这项⼯作？-背景和目的）"><a href="#他们为什么做这项⼯作？-背景和目的）" class="headerlink" title="他们为什么做这项⼯作？(背景和目的）"></a>他们为什么做这项⼯作？(背景和目的）</h2><h3 id="背景："><a href="#背景：" class="headerlink" title="背景："></a><strong>背景</strong>：</h3><ul>
+<li>无线定位系统中锚的位置→位置隐私泄露。攻击者可能根据显示的位置攻击锚点，甚至破坏定位基础结构。</li>
+<li>基于差异隐私的技术可以为隐私保护提供理论上的保证，而这种隐私保护则会降低定位精度。但是，定位精度和隐私级别之间的定量关系仍然不清楚。 </li>
+</ul>
+<h3 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h3><ul>
+<li>研究在<strong>单个目标定位系统</strong>中定位精度与位置隐私级别之间的定量关系，其中以<strong>地理不可区分性</strong>为隐私概念。</li>
+</ul>
+<h2 id="针对这项工作，别人做过了哪些⼯作，有哪些缺陷？"><a href="#针对这项工作，别人做过了哪些⼯作，有哪些缺陷？" class="headerlink" title="针对这项工作，别人做过了哪些⼯作，有哪些缺陷？"></a>针对这项工作，别人做过了哪些⼯作，有哪些缺陷？</h2><ul>
+<li>Andrés等提出了位置隐私的地理不可区分性的概念，可以将其视为欧几里德度量上的差分隐私的应用[6]。 地理不可区分性已被用于许多现有作品中以保护位置隐私。</li>
+<li>Ngo和Kim利用地理不可区分性发布了根据希尔伯特曲线制作的隐身区域的最佳尺寸[5]。</li>
+<li>Geng和Viswanath研究了隐私和效用之间的基本权衡，并在非常通用的效用最大化框架下推导了单个实值查询函数的最优私有机制[11]。</li>
+<li>Shoaran等。考察了噪声累积概率与隐私度之间的关系，并显示了合理使用差异隐私且相对误差以某个值为界的情况[12]。 </li>
+</ul>
+<h2 id="他们⼤概是怎么做这项⼯作的？（⼀两句话概括）"><a href="#他们⼤概是怎么做这项⼯作的？（⼀两句话概括）" class="headerlink" title="他们⼤概是怎么做这项⼯作的？（⼀两句话概括）"></a>他们⼤概是怎么做这项⼯作的？（⼀两句话概括）</h2><ul>
+<li>本文是<strong>研究无线定位系统中目标定位精度与锚定位隐私级别之间定量关系</strong>的第一项工作，当锚点采用满足地理不可区分性的隐私保护机制时，理论上我们会在常规测量模型下得出有关目标的CramérRao下界（CRLB）</li>
+<li>针对单个目标定位系统推导了目标定位精度与锚点位置隐私级别之间的定量关系。 在考虑的系统中，为了保护位置隐私，锚点遵循平面拉普拉斯分布来报告其位置。 封闭形式的PEB分别用于仅用于范围和仅用于方位测量的具有隐私保护的定位系统。 理论和数值结果均表明，隐私保护的存在将降低定位精度。</li>
+</ul>
+<h2 id="他们的这项⼯作，做的好不好？好在哪⾥？"><a href="#他们的这项⼯作，做的好不好？好在哪⾥？" class="headerlink" title="他们的这项⼯作，做的好不好？好在哪⾥？"></a>他们的这项⼯作，做的好不好？好在哪⾥？</h2><ul>
+<li>理论和数值结果均可以为设计对隐私敏感的本地化系统提供指导，同时考虑到了本地化准确性与隐私保护之间的权衡。</li>
+<li>证明过程严谨</li>
+</ul>
+<h2 id="他们这项⼯作，有没有不好之处，不好在哪⾥？"><a href="#他们这项⼯作，有没有不好之处，不好在哪⾥？" class="headerlink" title="他们这项⼯作，有没有不好之处，不好在哪⾥？"></a>他们这项⼯作，有没有不好之处，不好在哪⾥？</h2><p>无，存粹的理论证明</p>
+<h2 id="他们的这项工作做的好，为啥好呢？他们是⽤啥理论证明的呢？-（可能涉及方法正确性、性能、安全性）"><a href="#他们的这项工作做的好，为啥好呢？他们是⽤啥理论证明的呢？-（可能涉及方法正确性、性能、安全性）" class="headerlink" title="他们的这项工作做的好，为啥好呢？他们是⽤啥理论证明的呢？ （可能涉及方法正确性、性能、安全性）"></a>他们的这项工作做的好，为啥好呢？他们是⽤啥理论证明的呢？ （可能涉及方法正确性、性能、安全性）</h2><h3 id="正确性"><a href="#正确性" class="headerlink" title="正确性"></a>正确性</h3><ul>
+<li><p>本文采用地理不可区分性为隐私概念：</p>
+<p><img src="https://i.loli.net/2020/12/18/oAGbDHmqRks2SeC.png"></p>
+<p>其中x和x’是用户的可能位置，S是报告点的观察点，P（S     | x）和P（S | x’）是分别在位置x和位置x’报告S中的点的概率，ε是一个正参数，d（x，x’）是x与x’之间的欧几里得距离，r是以用户所在位置为中心的圆的半径。该定义说明，x和x’在S中产生报告点的概率之比由e^εr^限制。当εr足够小时，S中的报告点由x和x’产生，且概率相似，因此很难确定实际位置是x还是x’，从而隐私得到保证。</p>
+</li>
+</ul>
+<h2 id="他们这项⼯作做的好，肯定有实验，那么他们怎么用实验来证明-他们的好的？"><a href="#他们这项⼯作做的好，肯定有实验，那么他们怎么用实验来证明-他们的好的？" class="headerlink" title="他们这项⼯作做的好，肯定有实验，那么他们怎么用实验来证明 他们的好的？"></a>他们这项⼯作做的好，肯定有实验，那么他们怎么用实验来证明 他们的好的？</h2><h3 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h3><ul>
+<li>无</li>
+</ul>
+<h3 id="数据集、数据集处理方式"><a href="#数据集、数据集处理方式" class="headerlink" title="数据集、数据集处理方式"></a>数据集、数据集处理方式</h3><ul>
+<li><p>由于是理论证明，就假定三个锚点位置构成一个单位等边三角形，<img src="https://i.loli.net/2020/12/18/fCSjobZ4eXGdslu.png"></p>
+<p>目标可以位于矩形中的任何位置.设零均值高斯测量噪声的方差为σ^2^ <del>ω</del>= 1,所有锚点都按照平面拉普拉斯分布报告了混淆的位置。 在地理不可区分性机制中，我们设置ε= 1.</p>
+</li>
+</ul>
+<h3 id="编码语⾔"><a href="#编码语⾔" class="headerlink" title="编码语⾔"></a>编码语⾔</h3><p>无</p>
+<h3 id="对比角度和方法"><a href="#对比角度和方法" class="headerlink" title="对比角度和方法"></a>对比角度和方法</h3><ul>
+<li>对比不使用隐私保护和使用隐私保护的定位精度的数值结果。</li>
+<li>研究隐私保护在不同锚点中对定位准确性的影响</li>
+</ul>
+<h3 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h3><ul>
+<li>PEB：实验误差结果，该图证实了隐私保护将增加误差，而不会改变误差的分布。</li>
+</ul>
+<p><img src="https://i.loli.net/2020/12/18/JGIVSrxNugaBeXv.png"></p>
+<ul>
+<li><p>让不同的锚混淆其位置以保护隐私，并且将目标定位精度从ε增加到0.2到2。该图<strong>说明PEB是ε的严格单调递减函数。</strong> 但是，当ε超过某个值时，即使ε仍在增加，它对估计误差的影响也不再明显，在这种情况下，通过增加ε来提高定位精度的努力是没有意义的，甚至是不合理的，<strong>因为增加的ε会导致 隐私等级下降</strong>。 此外，具有隐私保护功能的锚点数量更多会导致更高的定位错误。 对于给定数量的隐私保护锚，不同的锚对PEB的影响也不同。 我们可以在仅方位定位中获得类似的结果</p>
+<p><img src="https://i.loli.net/2020/12/18/F9GxqIAOYkSHTlo.png"></p>
+</li>
+</ul>
+<h2 id="针对这项⼯作，他们有没有说，未来还打算怎么做呢？具体说了哪些呢？"><a href="#针对这项⼯作，他们有没有说，未来还打算怎么做呢？具体说了哪些呢？" class="headerlink" title="针对这项⼯作，他们有没有说，未来还打算怎么做呢？具体说了哪些呢？"></a>针对这项⼯作，他们有没有说，未来还打算怎么做呢？具体说了哪些呢？</h2><ul>
+<li>只提到未来的工作将致力于为特定的精度要求设计最佳的隐私保护机制。</li>
+</ul>
+<h2 id="这项⼯作的idea与哪些论⽂有⼀脉相承的关系呢？或者说，你感-觉这篇论⽂的作者是看了哪些论⽂，才想到这项⼯作的idea呢？"><a href="#这项⼯作的idea与哪些论⽂有⼀脉相承的关系呢？或者说，你感-觉这篇论⽂的作者是看了哪些论⽂，才想到这项⼯作的idea呢？" class="headerlink" title="这项⼯作的idea与哪些论⽂有⼀脉相承的关系呢？或者说，你感 觉这篇论⽂的作者是看了哪些论⽂，才想到这项⼯作的idea呢？"></a>这项⼯作的idea与哪些论⽂有⼀脉相承的关系呢？或者说，你感 觉这篇论⽂的作者是看了哪些论⽂，才想到这项⼯作的idea呢？</h2><ul>
+<li>基于位置的服务【location-based service】（LBS）在工业和生活中的广泛普及定位技术需要满足更高的要求。位置有关的信息收集和位置估计[1]。 在信息收集过程中，锚点的位置信息将不可避免地暴露给目标或不受信任的第三方[2]。——[1]，[2]提出了威胁</li>
+<li>基于差异性隐私的技术可以为隐私保护提供理论上的保证，同时它们会降低数据效用以及服务质量或系统性能[11]，[12]。——【差分隐私的缺点】</li>
+<li>前述分析中，数据效用通常通过数据偏差的函数来度量。 在定位系统中，数据实用程序是指定位精度，该精度受锚点位置隐私保护的影响。 <strong>但是，定位精度和位置隐私级别之间的定量关系仍然不清楚。</strong></li>
+</ul>
+<h2 id="这篇论文的核心参考文献是？这些参考文献都起到了什么作用呢？"><a href="#这篇论文的核心参考文献是？这些参考文献都起到了什么作用呢？" class="headerlink" title="这篇论文的核心参考文献是？这些参考文献都起到了什么作用呢？"></a>这篇论文的核心参考文献是？这些参考文献都起到了什么作用呢？</h2><ul>
+<li>Andrés等提出了位置隐私的地理不可区分性的概念，可以将其视为欧几里德度量上的差分隐私的应用[6]。     地理不可区分性已被用于许多现有作品中以保护位置隐私。 ——【地理不可区分性基础】</li>
+<li>基于差异性隐私的技术可以为隐私保护提供理论上的保证，同时它们会降低数据效用以及服务质量或系统性能[11]，[12]。——【差分隐私的缺点】</li>
+</ul>
+<h2 id="这项工作，可以拆分为哪些子工作，就是哪些步骤。每个步骤，-或者每个子工作使用了哪些⼯具或者方法去完成的呢？画⼀个包含步骤和工具的类似流程图的东西呢。"><a href="#这项工作，可以拆分为哪些子工作，就是哪些步骤。每个步骤，-或者每个子工作使用了哪些⼯具或者方法去完成的呢？画⼀个包含步骤和工具的类似流程图的东西呢。" class="headerlink" title="这项工作，可以拆分为哪些子工作，就是哪些步骤。每个步骤， 或者每个子工作使用了哪些⼯具或者方法去完成的呢？画⼀个包含步骤和工具的类似流程图的东西呢。"></a>这项工作，可以拆分为哪些子工作，就是哪些步骤。每个步骤， 或者每个子工作使用了哪些⼯具或者方法去完成的呢？画⼀个包含步骤和工具的类似流程图的东西呢。</h2><ul>
+<li><p>首先在<a href="#%E6%AD%A3%E7%A1%AE%E6%80%A7">正确性</a>解释中，需要了解对于隐私概念的定义。</p>
+</li>
+<li><p>而定位精度是用CRLB的评估。</p>
+<p><img src="https://i.loli.net/2020/12/18/9k7qCYOlnt3c8RT.png" alt="CRLB流程图.png"></p>
+</li>
+<li><p>位置误差范围（PEB）通常被用作评估定位精度的标量度量，其计算公式如下</p>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2020/12/18/mq6Zty5JUhjLwIW.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">雨竹</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2020/12/18/SPL%E8%AE%BA%E6%96%87%E7%90%86%E8%A7%A3/">http://example.com/2020/12/18/SPL%E8%AE%BA%E6%96%87%E7%90%86%E8%A7%A3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">雨竹のspace</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E4%BF%A1%E5%AE%89%E8%AE%BA%E6%96%87%E7%90%86%E8%A7%A3/">信安论文理解</a></div><div class="post_share"><div class="social-share" data-image="/img/site/%E7%9B%B8%E6%8B%A51.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/12/30/2020%E5%B9%B4%E5%BA%A6%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/"><img class="prev-cover" src="https://i.loli.net/2021/01/01/rWGJySlk6MLdKci.jpg" onerror="onerror=null;src='/null'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">2020年度个人总结</div></div></a></div><div class="next-post pull-right"><a href="/2020/11/19/TDSC%E8%AE%BA%E6%96%87%E7%90%86%E8%A7%A3/"><img class="next-cover" src="https://img-blog.csdnimg.cn/20210102112543191.png" onerror="onerror=null;src='/null'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">TDSC论文理解</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/11/18/BDTF论文理解/" title="BDTF论文理解"><img class="cover" src="https://img-blog.csdnimg.cn/20210102111457610.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3lvdXJzMzIxNjU=,size_16,color_FFFFFF,t_70" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-18</div><div class="title">BDTF论文理解</div></div></a></div><div><a href="/2020/11/19/TDSC论文理解/" title="TDSC论文理解"><img class="cover" src="https://img-blog.csdnimg.cn/20210102112543191.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-19</div><div class="title">TDSC论文理解</div></div></a></div><div><a href="/2020/11/19/SDTE/" title="SDTE理解"><img class="cover" src="https://img-blog.csdnimg.cn/20210102112102902.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3lvdXJzMzIxNjU=,size_16,color_FFFFFF,t_70" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-19</div><div class="title">SDTE理解</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/site/%E4%B8%8B%E8%BD%BD.jpg" onerror="this.onerror=null;this.src='/null'" alt="avatar"/><div class="author-info__name">雨竹</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/yours-yu-zhu"><i class="fab fa-github"></i><span>yours-yu-zhu</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/yours-yu-zhu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:mayujiang0814@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">博客出生咯~</div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="card-content"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%96%E4%BB%AC%E4%B8%BA%E4%BB%80%E4%B9%88%E5%81%9A%E8%BF%99%E9%A1%B9%E2%BC%AF%E4%BD%9C%EF%BC%9F-%E8%83%8C%E6%99%AF%E5%92%8C%E7%9B%AE%E7%9A%84%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">他们为什么做这项⼯作？(背景和目的）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">背景：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E7%9A%84"><span class="toc-number">1.2.</span> <span class="toc-text">目的</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%92%88%E5%AF%B9%E8%BF%99%E9%A1%B9%E5%B7%A5%E4%BD%9C%EF%BC%8C%E5%88%AB%E4%BA%BA%E5%81%9A%E8%BF%87%E4%BA%86%E5%93%AA%E4%BA%9B%E2%BC%AF%E4%BD%9C%EF%BC%8C%E6%9C%89%E5%93%AA%E4%BA%9B%E7%BC%BA%E9%99%B7%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">针对这项工作，别人做过了哪些⼯作，有哪些缺陷？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%96%E4%BB%AC%E2%BC%A4%E6%A6%82%E6%98%AF%E6%80%8E%E4%B9%88%E5%81%9A%E8%BF%99%E9%A1%B9%E2%BC%AF%E4%BD%9C%E7%9A%84%EF%BC%9F%EF%BC%88%E2%BC%80%E4%B8%A4%E5%8F%A5%E8%AF%9D%E6%A6%82%E6%8B%AC%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">他们⼤概是怎么做这项⼯作的？（⼀两句话概括）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%96%E4%BB%AC%E7%9A%84%E8%BF%99%E9%A1%B9%E2%BC%AF%E4%BD%9C%EF%BC%8C%E5%81%9A%E7%9A%84%E5%A5%BD%E4%B8%8D%E5%A5%BD%EF%BC%9F%E5%A5%BD%E5%9C%A8%E5%93%AA%E2%BE%A5%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">他们的这项⼯作，做的好不好？好在哪⾥？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%96%E4%BB%AC%E8%BF%99%E9%A1%B9%E2%BC%AF%E4%BD%9C%EF%BC%8C%E6%9C%89%E6%B2%A1%E6%9C%89%E4%B8%8D%E5%A5%BD%E4%B9%8B%E5%A4%84%EF%BC%8C%E4%B8%8D%E5%A5%BD%E5%9C%A8%E5%93%AA%E2%BE%A5%EF%BC%9F"><span class="toc-number">5.</span> <span class="toc-text">他们这项⼯作，有没有不好之处，不好在哪⾥？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%96%E4%BB%AC%E7%9A%84%E8%BF%99%E9%A1%B9%E5%B7%A5%E4%BD%9C%E5%81%9A%E7%9A%84%E5%A5%BD%EF%BC%8C%E4%B8%BA%E5%95%A5%E5%A5%BD%E5%91%A2%EF%BC%9F%E4%BB%96%E4%BB%AC%E6%98%AF%E2%BD%A4%E5%95%A5%E7%90%86%E8%AE%BA%E8%AF%81%E6%98%8E%E7%9A%84%E5%91%A2%EF%BC%9F-%EF%BC%88%E5%8F%AF%E8%83%BD%E6%B6%89%E5%8F%8A%E6%96%B9%E6%B3%95%E6%AD%A3%E7%A1%AE%E6%80%A7%E3%80%81%E6%80%A7%E8%83%BD%E3%80%81%E5%AE%89%E5%85%A8%E6%80%A7%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">他们的这项工作做的好，为啥好呢？他们是⽤啥理论证明的呢？ （可能涉及方法正确性、性能、安全性）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E7%A1%AE%E6%80%A7"><span class="toc-number">6.1.</span> <span class="toc-text">正确性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%96%E4%BB%AC%E8%BF%99%E9%A1%B9%E2%BC%AF%E4%BD%9C%E5%81%9A%E7%9A%84%E5%A5%BD%EF%BC%8C%E8%82%AF%E5%AE%9A%E6%9C%89%E5%AE%9E%E9%AA%8C%EF%BC%8C%E9%82%A3%E4%B9%88%E4%BB%96%E4%BB%AC%E6%80%8E%E4%B9%88%E7%94%A8%E5%AE%9E%E9%AA%8C%E6%9D%A5%E8%AF%81%E6%98%8E-%E4%BB%96%E4%BB%AC%E7%9A%84%E5%A5%BD%E7%9A%84%EF%BC%9F"><span class="toc-number">7.</span> <span class="toc-text">他们这项⼯作做的好，肯定有实验，那么他们怎么用实验来证明 他们的好的？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83"><span class="toc-number">7.1.</span> <span class="toc-text">实验环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E3%80%81%E6%95%B0%E6%8D%AE%E9%9B%86%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F"><span class="toc-number">7.2.</span> <span class="toc-text">数据集、数据集处理方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E7%A0%81%E8%AF%AD%E2%BE%94"><span class="toc-number">7.3.</span> <span class="toc-text">编码语⾔</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94%E8%A7%92%E5%BA%A6%E5%92%8C%E6%96%B9%E6%B3%95"><span class="toc-number">7.4.</span> <span class="toc-text">对比角度和方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="toc-number">7.5.</span> <span class="toc-text">实验结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%92%88%E5%AF%B9%E8%BF%99%E9%A1%B9%E2%BC%AF%E4%BD%9C%EF%BC%8C%E4%BB%96%E4%BB%AC%E6%9C%89%E6%B2%A1%E6%9C%89%E8%AF%B4%EF%BC%8C%E6%9C%AA%E6%9D%A5%E8%BF%98%E6%89%93%E7%AE%97%E6%80%8E%E4%B9%88%E5%81%9A%E5%91%A2%EF%BC%9F%E5%85%B7%E4%BD%93%E8%AF%B4%E4%BA%86%E5%93%AA%E4%BA%9B%E5%91%A2%EF%BC%9F"><span class="toc-number">8.</span> <span class="toc-text">针对这项⼯作，他们有没有说，未来还打算怎么做呢？具体说了哪些呢？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E9%A1%B9%E2%BC%AF%E4%BD%9C%E7%9A%84idea%E4%B8%8E%E5%93%AA%E4%BA%9B%E8%AE%BA%E2%BD%82%E6%9C%89%E2%BC%80%E8%84%89%E7%9B%B8%E6%89%BF%E7%9A%84%E5%85%B3%E7%B3%BB%E5%91%A2%EF%BC%9F%E6%88%96%E8%80%85%E8%AF%B4%EF%BC%8C%E4%BD%A0%E6%84%9F-%E8%A7%89%E8%BF%99%E7%AF%87%E8%AE%BA%E2%BD%82%E7%9A%84%E4%BD%9C%E8%80%85%E6%98%AF%E7%9C%8B%E4%BA%86%E5%93%AA%E4%BA%9B%E8%AE%BA%E2%BD%82%EF%BC%8C%E6%89%8D%E6%83%B3%E5%88%B0%E8%BF%99%E9%A1%B9%E2%BC%AF%E4%BD%9C%E7%9A%84idea%E5%91%A2%EF%BC%9F"><span class="toc-number">9.</span> <span class="toc-text">这项⼯作的idea与哪些论⽂有⼀脉相承的关系呢？或者说，你感 觉这篇论⽂的作者是看了哪些论⽂，才想到这项⼯作的idea呢？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E7%AF%87%E8%AE%BA%E6%96%87%E7%9A%84%E6%A0%B8%E5%BF%83%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE%E6%98%AF%EF%BC%9F%E8%BF%99%E4%BA%9B%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE%E9%83%BD%E8%B5%B7%E5%88%B0%E4%BA%86%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8%E5%91%A2%EF%BC%9F"><span class="toc-number">10.</span> <span class="toc-text">这篇论文的核心参考文献是？这些参考文献都起到了什么作用呢？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E9%A1%B9%E5%B7%A5%E4%BD%9C%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%8B%86%E5%88%86%E4%B8%BA%E5%93%AA%E4%BA%9B%E5%AD%90%E5%B7%A5%E4%BD%9C%EF%BC%8C%E5%B0%B1%E6%98%AF%E5%93%AA%E4%BA%9B%E6%AD%A5%E9%AA%A4%E3%80%82%E6%AF%8F%E4%B8%AA%E6%AD%A5%E9%AA%A4%EF%BC%8C-%E6%88%96%E8%80%85%E6%AF%8F%E4%B8%AA%E5%AD%90%E5%B7%A5%E4%BD%9C%E4%BD%BF%E7%94%A8%E4%BA%86%E5%93%AA%E4%BA%9B%E2%BC%AF%E5%85%B7%E6%88%96%E8%80%85%E6%96%B9%E6%B3%95%E5%8E%BB%E5%AE%8C%E6%88%90%E7%9A%84%E5%91%A2%EF%BC%9F%E7%94%BB%E2%BC%80%E4%B8%AA%E5%8C%85%E5%90%AB%E6%AD%A5%E9%AA%A4%E5%92%8C%E5%B7%A5%E5%85%B7%E7%9A%84%E7%B1%BB%E4%BC%BC%E6%B5%81%E7%A8%8B%E5%9B%BE%E7%9A%84%E4%B8%9C%E8%A5%BF%E5%91%A2%E3%80%82"><span class="toc-number">11.</span> <span class="toc-text">这项工作，可以拆分为哪些子工作，就是哪些步骤。每个步骤， 或者每个子工作使用了哪些⼯具或者方法去完成的呢？画⼀个包含步骤和工具的类似流程图的东西呢。</span></a></li></ol></div></div></div><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/05/14/%E5%AE%9A%E6%8A%95%E6%97%A5%E8%AE%B0-2021.5.14/" title="定投日记-2021.5.14"><img src="https://img-blog.csdnimg.cn/20210514143223433.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3lvdXJzMzIxNjU=,size_16,color_FFFFFF,t_70" onerror="this.onerror=null;this.src='/null'" alt="定投日记-2021.5.14"/></a><div class="content"><a class="title" href="/2021/05/14/%E5%AE%9A%E6%8A%95%E6%97%A5%E8%AE%B0-2021.5.14/" title="定投日记-2021.5.14">定投日记-2021.5.14</a><time datetime="2021-05-14T06:28:06.000Z" title="发表于 2021-05-14 14:28:06">2021-05-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/25/%E8%87%AA%E6%88%91%E6%8A%95%E8%B5%84%E4%BD%93%E7%B3%BB%E6%9E%84%E5%BB%BA/" title="自我投资体系构建"><img src="https://static001.infoq.cn/resource/image/b8/27/b88bb0767c7540f02bc9f1c9f5180627.jpg" onerror="this.onerror=null;this.src='/null'" alt="自我投资体系构建"/></a><div class="content"><a class="title" href="/2021/04/25/%E8%87%AA%E6%88%91%E6%8A%95%E8%B5%84%E4%BD%93%E7%B3%BB%E6%9E%84%E5%BB%BA/" title="自我投资体系构建">自我投资体系构建</a><time datetime="2021-04-25T14:39:48.000Z" title="发表于 2021-04-25 22:39:48">2021-04-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/17/%E5%AE%9A%E6%8A%95%E6%97%A5%E8%AE%B0-2021.4.17/" title="定投日记-2021.4.17"><img src="https://img-blog.csdnimg.cn/20210417214652586.png" onerror="this.onerror=null;this.src='/null'" alt="定投日记-2021.4.17"/></a><div class="content"><a class="title" href="/2021/04/17/%E5%AE%9A%E6%8A%95%E6%97%A5%E8%AE%B0-2021.4.17/" title="定投日记-2021.4.17">定投日记-2021.4.17</a><time datetime="2021-04-17T13:39:06.000Z" title="发表于 2021-04-17 21:39:06">2021-04-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/12/30/2020%E5%B9%B4%E5%BA%A6%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/" title="2020年度个人总结"><img src="https://i.loli.net/2021/01/01/rWGJySlk6MLdKci.jpg" onerror="this.onerror=null;this.src='/null'" alt="2020年度个人总结"/></a><div class="content"><a class="title" href="/2020/12/30/2020%E5%B9%B4%E5%BA%A6%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/" title="2020年度个人总结">2020年度个人总结</a><time datetime="2020-12-30T14:46:44.000Z" title="发表于 2020-12-30 22:46:44">2020-12-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/12/18/SPL%E8%AE%BA%E6%96%87%E7%90%86%E8%A7%A3/" title="SPL论文理解"><img src="/img/site/%E7%9B%B8%E6%8B%A51.jpg" onerror="this.onerror=null;this.src='/null'" alt="SPL论文理解"/></a><div class="content"><a class="title" href="/2020/12/18/SPL%E8%AE%BA%E6%96%87%E7%90%86%E8%A7%A3/" title="SPL论文理解">SPL论文理解</a><time datetime="2020-12-18T02:52:31.000Z" title="发表于 2020-12-18 10:52:31">2020-12-18</time></div></div></div></div></div></div></div></main><footer id="footer" style="background: grey"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 雨竹</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi,  welcome  to  雨竹の  <a  target="_blank" rel="noopener" href="https://butterfly.js.org/">space</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'lCEdgoVokJw4cckCQJlbtlVF-gzGzoHsz',
+      appKey: 'BwUuK2YS7wnmFMqswViw5fVa',
+      placeholder: '说点什么吧？',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: 'https://lcedgovo.lc-cn-n1-shared.com',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign({}, initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="false"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script></div></body></html>
